@@ -11,13 +11,69 @@ class DashboardController extends BaseController
     {
         $userModel = new UserModel();
         $users = $userModel->findAll();
+        
+        $data['users'] = $users;
+        return view('NavbarView').view('DashboardView', ['data' => $data]);
+    }
 
-        return view('NavbarView').view('DashboardView', ['data' => $users]);
+    public function delete($id)
+    {
+        $userModel = new UserModel();
+        $userModel->delete($id);
+
+        return redirect()->to('/dashboard');
+    }
+
+    public function update($id)
+    {
+        $userModel = new UserModel();
+        $data = $userModel->find($id);
+
+        return view('UpdateView', ['data' => $data]);
+    }
+
+    public function updatePost()
+    {
+        $userModel = new UserModel();
+        $id = $this->request->getPost('id');
+
+        if ($this->request->getPost('password') == '') {
+            $data = [
+                'username' => $this->request->getPost('username'),
+            ];
+            $userModel->update($id, $data);
+
+            return redirect()->to('/dashboard');
+        }else{
+            $data = [
+                'username' => $this->request->getPost('username'),
+                'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+            ];
+            $userModel->update($id, $data);
+
+            return redirect()->to('/dashboard');
+        }
+    }
+
+    public function create()
+    {
+        return view('CreateView');
+    }
+
+    public function createPost()
+    {
+        $userModel = new UserModel();
+        $data = [
+            'username' => $this->request->getPost('username'),
+            'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+        ];
+        $userModel->save($data);
+
+        return redirect()->to('/dashboard');
     }
 
     public function search()
     {
-        // get data from url https://ogienurdiana.com/career/ecc694ce4e7f6e45a5a7912cde9fe131
         $curl = \Config\Services::curlrequest();
         $curl2 = curl_init();
         $keyword = $this->request->getPost('search');
@@ -31,7 +87,6 @@ class DashboardController extends BaseController
         $rows = explode("\n", $result['DATA']);
         $parsedData = [];
         unset($rows[0]);
-        // echo implode("<br>", $rows);
 
         $keyword = str_replace(" ", "", $keyword);
         foreach ($rows as $row) {
