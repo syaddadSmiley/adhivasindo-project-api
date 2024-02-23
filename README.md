@@ -17,5 +17,6 @@ C.	point 1.B,C,D,E harus ada autentifikasi dari point 1.A
 D.	point 1.C,D,E mengambil data real-time dari https://bit.ly/48ejMhW 
 E.	history commits pada GitHub 
 
+#### Selesai 23 February 2024, 11:55 AM
 
 ### Project Tree Views, Controllers
