@@ -14,14 +14,13 @@ class RegisterController extends BaseController
     {
         $userModel = new UserModel();
 
-        $user = $userModel->where('email', $this->request->getPost('email'))->first();
+        $user = $userModel->where('username', $this->request->getPost('username'))->first();
         if ($user) {
             return view('NavbarView').view('RegisterView');
         }
         
         $userModel->insert([
-            'name' => $this->request->getPost('name'),
-            'email' => $this->request->getPost('email'),
+            'username' => $this->request->getPost('name'),
             'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
         ]);
 

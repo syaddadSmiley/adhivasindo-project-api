@@ -27,6 +27,6 @@ class LoginController extends BaseController
 
         session()->set('user', $user);
 
-        return redirect()->to('/redeem');
+        return redirect()->to('/dashboard');
     }
 }
