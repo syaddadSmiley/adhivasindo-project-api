@@ -13,9 +13,5 @@ $routes->get('/login', 'LoginController::index');
 $routes->post('/login', 'LoginController::login');
 
 $routes->get('/dashboard', 'DashboardController::index', ["filter" => "auth"]);
-
-$routes->group('auth', ["filter" => "auth"], function ($routes) {
-    $routes->get('/dashboard', 'DashboardController::index');
-    $routes->get('/logout', 'LogoutController::index');
-});
-
+$routes->get('/logout', 'LogoutController::index', ["filter" => "auth"]);
+$routes->post('/search', 'DashboardController::search', ["filter" => "auth"]);

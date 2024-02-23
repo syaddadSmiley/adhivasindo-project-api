@@ -7,7 +7,7 @@
         .nav {
             display: flex;
             justify-content: space-between;
-            background-color: #f1f1f1;
+            background-color: #1fd655;
             padding: 10px;
         }
 
@@ -21,6 +21,10 @@
 
         .nav ul li {
             margin-right: 10px;
+        }
+
+        .nav ul li:hover {
+            background-color: #f2f2f2;
         }
 
         .nav ul li a {
